@@ -1,0 +1,76 @@
+# Scalable and Installable Java App
+
+A standalone Java server learning repository. The project starts with the JDK HTTP server and will later compare embedded Tomcat, embedded Jetty, and Spring Boot using the same HTTP contract. See the [learning roadmap](docs/ROADMAP.md).
+
+## Current state
+
+The repository intentionally begins with build, configuration, concurrency, lifecycle, and container defects. Diagnose the baseline before changing `App.java`, `pom.xml`, or `Dockerfile`. Commands from the original challenge may fail until the corresponding milestone is completed.
+
+## Select Java 21 with SDKMAN
+
+The repository pins Java 21 in `.sdkmanrc`.
+
+```shell
+sdk env install  # needed only when 21-tem is not installed
+sdk env
+java --version
+mvn --version
+```
+
+Both version checks should report Java 21. SDKMAN can activate the repository environment automatically when `sdkman_auto_env=true`; otherwise run `sdk env` after entering the repository. Configure an IDE and its Maven runner to use the same JDK.
+
+## Original challenge
+
+این پروژه یک اپلیکیشن ساده با Java 21 و Maven است. هدف تمرین، شناسایی و رفع مشکلات مقیاس‌پذیری و نصب‌پذیری پروژه است؛ بدون آن‌که رفتار اصلی endpoint تغییر کند.
+
+## چالش‌ها
+
+### 1. مقیاس‌پذیری (Scalability)
+
+اپلیکیشن فعلی از executor پیش‌فرض استفاده می‌کند و توانایی پاسخ‌گویی هم‌زمان به چندین درخواست را ندارد. در حال حاضر سرور به‌صورت تک‌ریسمانی (`single-threaded`) اجرا می‌شود. ساختار پروژه را طوری تغییر دهید که سرور بتواند به تعداد زیادی درخواست هم‌زمان پاسخ دهد.
+
+### 2. نصب‌پذیری (Installability)
+
+در اجرای پروژه و تغییر تنظیمات محیطی مشکلاتی وجود دارد. فرایند build، فایل `Dockerfile` و پیکربندی پروژه را طوری اصلاح کنید که پروژه روی محیط‌های مختلف به‌سادگی و به‌صورت خودکار، بدون نیاز به تنظیمات دستی، build و اجرا شود.
+
+## راهنمای اجرا
+
+1. باید Java 21 و Maven روی سیستم نصب باشند.
+2. برای اجرای پروژه به‌صورت محلی:
+
+   ```shell
+   mvn clean compile exec:java
+   ```
+
+3. برای اجرای پروژه با Docker:
+
+   ```shell
+   docker build -t scalable-java-app .
+   docker run -p 8080:8080 scalable-java-app
+   ```
+
+پس از اجرا، endpoint زیر باید در دسترس باشد:
+
+```text
+GET http://localhost:8080/hello
+```
+
+پاسخ مورد انتظار:
+
+```text
+Hello, World!
+```
+
+## نکات
+
+- فرایند build و deploy باید پایدار باشد و روی محیط‌های مختلف به‌شکل یکسان کار کند.
+- امکان تغییر پورت و سایر تنظیمات از طریق متغیرهای محیطی فراهم شود و مقدار پیش‌فرض مناسبی وجود داشته باشد.
+- مدیریت thread pool و منابع آن باید به‌درستی انجام شود.
+
+## Hint
+
+- برای مقیاس‌پذیری، نحوه استفاده از `Executor` و مدیریت چرخه عمر منابع را بررسی کنید.
+- قابلیت تنظیم پیکربندی از طریق متغیرهای محیطی و اجرای مستقل با Docker را در نظر بگیرید.
+- اطمینان حاصل کنید dependencyها و ابزارهای لازم برای Java 21 هنگام build روی سیستم‌عامل‌های مختلف در دسترس هستند.
+
+> این صورت‌مسئله از روی تصاویر آزمون بازسازی شده است. عبارت‌بندی برای خوانایی یکدست شده، اما الزامات و ایرادهای قابل مشاهده عمداً حفظ شده‌اند.

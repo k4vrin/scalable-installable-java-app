@@ -1,0 +1,2 @@
+# Repository-local JDK; activate with sdk env.
+java=21-tem
