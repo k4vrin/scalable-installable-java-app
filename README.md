@@ -1,25 +1,27 @@
 # Scalable and Installable Java App
 
-A standalone Java server learning repository. The project starts with the JDK HTTP server and will later compare embedded Tomcat, embedded Jetty, and Spring Boot using the same HTTP contract. See the [learning roadmap](docs/ROADMAP.md).
+An educational Java 21 HTTP server repository for learning how concurrency, runtime configuration, packaging, and lifecycle design affect scalability and installability. The project starts with the JDK HTTP server and will later compare embedded Tomcat, embedded Jetty, and Spring Boot using the same HTTP contract. See the [learning roadmap](docs/ROADMAP.md).
 
 ## Current state
 
-The repository intentionally begins with build, configuration, concurrency, lifecycle, and container defects. Diagnose the baseline before changing `App.java`, `pom.xml`, or `Dockerfile`. Commands from the original challenge may fail until the corresponding milestone is completed.
+The repository intentionally begins with build, configuration, concurrency, lifecycle, and container defects. It is learning material, not a production-ready server. Diagnose the baseline before changing `App.java`, `pom.xml`, or `Dockerfile`; commands from the reconstructed challenge may fail until the corresponding milestone is completed.
 
-## Select Java 21 with SDKMAN
+## Prerequisites
 
-The repository pins Java 21 in `.sdkmanrc`.
+- Java 21
+- Apache Maven
+- Docker, for the container milestones
+
+The repository includes an optional `.sdkmanrc` pin for SDKMAN users. After cloning, activate it with `sdk env`; otherwise select Java 21 using your preferred JDK manager. Verify the active toolchain before starting:
 
 ```shell
-sdk env install  # needed only when 21-tem is not installed
-sdk env
 java --version
 mvn --version
 ```
 
-Both version checks should report Java 21. SDKMAN can activate the repository environment automatically when `sdkman_auto_env=true`; otherwise run `sdk env` after entering the repository. Configure an IDE and its Maven runner to use the same JDK.
+Both commands should report Java 21. Configure your IDE and its Maven runner to use the same JDK.
 
-## Original challenge
+## Reconstructed challenge statement
 
 این پروژه یک اپلیکیشن ساده با Java 21 و Maven است. هدف تمرین، شناسایی و رفع مشکلات مقیاس‌پذیری و نصب‌پذیری پروژه است؛ بدون آن‌که رفتار اصلی endpoint تغییر کند.
 
